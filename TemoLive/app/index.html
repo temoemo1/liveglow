@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemoLive - بث مباشر</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- صفحة التسجيل/الدخول -->
+    <div id="auth-page" class="page active">
+        <div class="auth-container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="TemoLive Logo" class="app-logo">
+                <h1>TemoLive</h1>
+            </div>
+            
+            <div class="auth-forms">
+                <form id="login-form" class="auth-form">
+                    <h2>تسجيل الدخول</h2>
+                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <input type="password" placeholder="كلمة المرور" required>
+                    <button type="submit" class="btn-primary">دخول</button>
+                    <p class="divider">أو</p>
+                    <button type="button" class="btn-social"><i class="fab fa-google"></i> تسجيل عبر Google</button>
+                    <button type="button" class="btn-social"><i class="fab fa-facebook"></i> تسجيل عبر Facebook</button>
+                    <p class="switch-auth">ليس لديك حساب؟ <a href="#" onclick="showSignup()">إنشاء حساب</a></p>
+                </form>
+                
+                <form id="signup-form" class="auth-form hidden">
+                    <h2>إنشاء حساب جديد</h2>
+                    <input type="text" placeholder="الاسم الكامل" required>
+                    <input type="email" placeholder="البريد الإلكتروني" required>
+                    <input type="tel" placeholder="رقم الهاتف" required>
+                    <input type="password" placeholder="كلمة المرور" required>
+                    <button type="submit" class="btn-primary">تسجيل</button>
+                    <p class="switch-auth">لديك حساب بالفعل؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة الرئيسية -->
+    <div id="home-page" class="page hidden">
+        <header class="main-header">
+            <div class="header-left">
+                <img src="assets/images/logo.png" alt="TemoLive" class="header-logo">
+                <h1>TemoLive</h1>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon"><i class="fas fa-search"></i></button>
+                <button class="btn-icon"><i class="fas fa-bell"></i></button>
+                <div class="user-avatar">
+                    <img src="assets/images/avatar.png" alt="User">
+                    <span class="level">15</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="bottom-nav">
+            <a href="#home" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#trending" class="nav-item">
+                <i class="fas fa-fire"></i>
+                <span>الأكثر شعبية</span>
+            </a>
+            <a href="#live" class="nav-item live-btn">
+                <i class="fas fa-video"></i>
+                <span>بث مباشر</span>
+            </a>
+            <a href="#messages" class="nav-item">
+                <i class="fas fa-comment"></i>
+                <span>الرسائل</span>
+            </a>
+            <a href="#profile" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </a>
+        </nav>
+
+        <main class="content">
+            <!-- تبويبات الفئات -->
+            <div class="categories">
+                <button class="category-btn active">الكل</button>
+                <button class="category-btn">ألعاب</button>
+                <button class="category-btn">موسيقى</button>
+                <button class="category-btn">طبخ</button>
+                <button class="category-btn">رياضة</button>
+                <button class="category-btn">ترفيه</button>
+            </div>
+
+            <!-- شبكة البثوث المباشرة -->
+            <div class="live-grid">
+                <!-- بطاقة بث 1 -->
+                <div class="live-card" onclick="openStream('stream1')">
+                    <div class="stream-thumbnail">
+                        <img src="assets/images/stream1.jpg" alt="Stream">
+                        <div class="live-badge">مباشر</div>
+                        <div class="viewer-count">
+                            <i class="fas fa-eye"></i>
+                            <span>2.5K</span>
+                        </div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="assets/images/streamer1.jpg" alt="Streamer" class="streamer-avatar">
+                            <div class="streamer-details">
+                                <h3>أحمد محمد</h3>
+                                <p>بث مباشر: لعبة كرة القدم</p>
+                            </div>
+                        </div>
+                        <div class="stream-actions">
+                            <button class="btn-gift"><i class="fas fa-gift"></i></button>
+                            <button class="btn-follow"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة بث 2 -->
+                <div class="live-card" onclick="openStream('stream2')">
+                    <div class="stream-thumbnail">
+                        <img src="assets/images/stream2.jpg" alt="Stream">
+                        <div class="live-badge">مباشر</div>
+                        <div class="viewer-count">
+                            <i class="fas fa-eye"></i>
+                            <span>1.8K</span>
+                        </div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="assets/images/streamer2.jpg" alt="Streamer" class="streamer-avatar">
+                            <div class="streamer-details">
+                                <h3>سارة علي</h3>
+                                <p>بث مباشر: طبخ عربي</p>
+                            </div>
+                        </div>
+                        <div class="stream-actions">
+                            <button class="btn-gift"><i class="fas fa-gift"></i></button>
+                            <button class="btn-follow"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المزيد من البطاقات... -->
+            </div>
+        </main>
+    </div>
+
+    <!-- صفحة البث المباشر -->
+    <div id="stream-page" class="page hidden">
+        <div class="stream-container">
+            <video id="live-video" autoplay playsinline></video>
+            
+            <!-- معلومات البث العلوية -->
+            <div class="stream-header">
+                <button class="btn-back" onclick="closeStream()">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="stream-title">
+                    <h2>عنوان البث المباشر</h2>
+                    <div class="viewer-info">
+                        <i class="fas fa-eye"></i>
+                        <span id="viewer-count">2,543</span> مشاهد
+                    </div>
+                </div>
+                <button class="btn-share"><i class="fas fa-share"></i></button>
+            </div>
+
+            <!-- معلومات المذيع -->
+            <div class="streamer-info">
+                <img src="assets/images/streamer.jpg" alt="Streamer" class="streamer-avatar-large">
+                <div class="streamer-details">
+                    <h3>اسم المذيع</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+                    <div class="stats">
+                        <span><i class="fas fa-heart"></i> 15.2K متابع</span>
+                        <span><i class="fas fa-star"></i> مستوى 25</span>
+                    </div>
+                </div>
+                <button class="btn-follow-large">متابعة</button>
+            </div>
+
+            <!-- الدردشة الحية -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- رسائل الدردشة ستظهر هنا -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="اكتب رسالة..." id="chat-input">
+                    <button class="btn-send" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <button class="btn-gift-open" onclick="openGiftPanel()">
+                        <i class="fas fa-gift"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- لوحة الهدايا -->
+            <div id="gift-panel" class="gift-panel hidden">
+                <div class="gift-header">
+                    <h3>إرسال هدية</h3>
+                    <button class="btn-close" onclick="closeGiftPanel()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="gift-categories">
+                    <button class="gift-cat-btn active">الكل</button>
+                    <button class="gift-cat-btn">رخيصة</button>
+                    <button class="gift-cat-btn">متوسطة</button>
+                    <button class="gift-cat-btn">فاخرة</button>
+                </div>
+                <div class="gift-grid">
+                    <!-- Pop Pass -->
+                    <div class="gift-item" onclick="sendGift('pop-pass', 100)">
+                        <div class="gift-icon">🎫</div>
+                        <div class="gift-name">Pop Pass</div>
+                        <div class="gift-price">100</div>
+                    </div>
+                    
+                    <!-- Ice Cream -->
+                    <div class="gift-item" onclick="sendGift('ice-cream', 500)">
+                        <div class="gift-icon">🍦</div>
+                        <div class="gift-name">Ice Cream</div>
+                        <div class="gift-price">500</div>
+                    </div>
+                    
+                    <!-- Coffee -->
+                    <div class="gift-item" onclick="sendGift('coffee', 500)">
+                        <div class="gift-icon">☕</div>
+                        <div class="gift-name">Coffee</div>
+                        <div class="gift-price">500</div>
+                    </div>
+                    
+                    <!-- Cheers -->
+                    <div class="gift-item" onclick="sendGift('cheers', 3000)">
+                        <div class="gift-icon">🎉</div>
+                        <div class="gift-name">Cheers</div>
+                        <div class="gift-price">3,000</div>
+                    </div>
+                    
+                    <!-- Love Doll -->
+                    <div class="gift-item" onclick="sendGift('love-doll', 10000)">
+                        <div class="gift-icon">💕</div>
+                        <div class="gift-name">Love Doll</div>
+                        <div class="gift-price">10,000</div>
+                    </div>
+                    
+                    <!-- Boxing -->
+                    <div class="gift-item" onclick="sendGift('boxing', 50000)">
+                        <div class="gift-icon">🥊</div>
+                        <div class="gift-name">Boxing</div>
+                        <div class="gift-price">50,000</div>
+                    </div>
+                    
+                    <!-- Diamond Fountain -->
+                    <div class="gift-item" onclick="sendGift('diamond-fountain', 100000)">
+                        <div class="gift-icon">💎</div>
+                        <div class="gift-name">Diamond Fountain</div>
+                        <div class="gift-price">100,000</div>
+                    </div>
+                    
+                    <!-- Lucky Box -->
+                    <div class="gift-item" onclick="sendGift('lucky-box', 'random')">
+                        <div class="gift-icon">🎁</div>
+                        <div class="gift-name">Lucky Box</div>
+                        <div class="gift-price">عشوائي</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تأثيرات الهدايا -->
+            <div id="gift-animation" class="gift-animation hidden">
+                <div class="animation-content"></div>
+                <div class="animation-sound"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المعركة (PK Battle) -->
+    <div id="pk-page" class="page hidden">
+        <div class="pk-container">
+            <div class="pk-header">
+                <h2>معركة مباشرة</h2>
+                <div class="pk-timer">
+                    <span id="pk-time">03:00</span>
+                </div>
+            </div>
+            
+            <div class="pk-players">
+                <div class="pk-player player1">
+                    <img src="assets/images/player1.jpg" alt="Player 1">
+                    <h3>أحمد</h3>
+                    <div class="pk-score" id="score1">0</div>
+                    <div class="pk-bar">
+                        <div class="pk-progress" id="progress1" style="width: 50%"></div>
+                    </div>
+                </div>
+                
+                <div class="pk-vs">VS</div>
+                
+                <div class="pk-player player2">
+                    <img src="assets/images/player2.jpg" alt="Player 2">
+                    <h3>سارة</h3>
+                    <div class="pk-score" id="score2">0</div>
+                    <div class="pk-bar">
+                        <div class="pk-progress" id="progress2" style="width: 50%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pk-chat">
+                <div class="chat-messages" id="pk-chat"></div>
+                <div class="chat-input">
+                    <input type="text" placeholder="ادعم لاعبك!">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة الملف الشخصي -->
+    <div id="profile-page" class="page hidden">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="assets/images/avatar.png" alt="Profile">
+                    <button class="btn-edit"><i class="fas fa-camera"></i></button>
+                </div>
+                <h2>اسم المستخدم</h2>
+                <p class="username">@username</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="value">1,234</span>
+                        <span class="label">متابع</span>
+                    </div>
+                    <div class="stat">
+                        <span class="value">567</span>
+                        <span class="label">متابَع</span>
+                    </div>
+                    <div class="stat">
+                        <span class="value">Level 15</span>
+                        <span class="label">المستوى</span>
+                    </div>
+                    <div class="stat">
+                        <span class="value">50,000</span>
+                        <span class="label">الهدايا</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-primary">تعديل الملف</button>
+                    <button class="btn-secondary"><i class="fas fa-cog"></i> الإعدادات</button>
+                </div>
+            </div>
+            
+            <div class="profile-tabs">
+                <button class="tab-btn active">البثوث</button>
+                <button class="tab-btn">الهدايا المستلمة</button>
+                <button class="tab-btn">المفضلة</button>
+            </div>
+            
+            <div class="profile-content">
+                <div class="wallet-section">
+                    <h3>المحفظة</h3>
+                    <div class="wallet-balance">
+                        <span class="balance">10,000 عملة</span>
+                        <button class="btn-recharge">شحن</button>
+                    </div>
+                    <div class="transaction-history">
+                        <h4>سجل المعاملات</h4>
+                        <!-- المعاملات ستظهر هنا -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
