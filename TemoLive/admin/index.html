@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemoLive - لوحة التحكم</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- القائمة الجانبية -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../assets/images/logo.png" alt="TemoLive" class="logo">
+            <h2>TemoLive Admin</h2>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#users" class="nav-link" onclick="showSection('users')">
+                <i class="fas fa-users"></i>
+                <span>المستخدمين</span>
+            </a>
+            <a href="#streams" class="nav-link" onclick="showSection('streams')">
+                <i class="fas fa-video"></i>
+                <span>البثوث</span>
+            </a>
+            <a href="#gifts" class="nav-link" onclick="showSection('gifts')">
+                <i class="fas fa-gift"></i>
+                <span>الهدايا</span>
+            </a>
+            <a href="#finance" class="nav-link" onclick="showSection('finance')">
+                <i class="fas fa-wallet"></i>
+                <span>المالية</span>
+            </a>
+            <a href="#reports" class="nav-link" onclick="showSection('reports')">
+                <i class="fas fa-chart-line"></i>
+                <span>التقارير</span>
+            </a>
+            <a href="#moderation" class="nav-link" onclick="showSection('moderation')">
+                <i class="fas fa-shield-alt"></i>
+                <span>الإشراف</span>
+            </a>
+            <a href="#settings" class="nav-link" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- الهيدر -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="btn-menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="page-title">لوحة التحكم الرئيسية</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" placeholder="بحث...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <button class="btn-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <div class="admin-profile">
+                    <img src="../assets/images/admin.jpg" alt="Admin">
+                    <div class="admin-info">
+                        <span class="name">المدير العام</span>
+                        <span class="role">Super Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- قسم الإحصائيات الرئيسية -->
+        <section id="dashboard" class="content-section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>50,234</h3>
+                        <p>إجمالي المستخدمين</p>
+                        <span class="stat-change positive">+12% هذا الشهر</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>1,234</h3>
+                        <p>بث مباشر نشط</p>
+                        <span class="stat-change positive">+5% اليوم</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>2.5M</h3>
+                        <p>هدايا مُرسلة</p>
+                        <span class="stat-change positive">+25% هذا الأسبوع</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>$125,430</h3>
+                        <p>الإيرادات الشهرية</p>
+                        <span class="stat-change positive">+18% هذا الشهر</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الرسوم البيانية -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>نمو المستخدمين</h3>
+                        <select class="chart-filter">
+                            <option>آخر 7 أيام</option>
+                            <option>آخر 30 يوم</option>
+                            <option>آخر سنة</option>
+                        </select>
+                    </div>
+                    <canvas id="usersChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>الإيرادات اليومية</h3>
+                        <select class="chart-filter">
+                            <option>هذا الأسبوع</option>
+                            <option>هذا الشهر</option>
+                        </select>
+                    </div>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>توزيع الهدايا</h3>
+                    </div>
+                    <canvas id="giftsChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>البثوث الأكثر مشاهدة</h3>
+                    </div>
+                    <canvas id="streamsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- آخر النشاطات -->
+            <div class="activity-card">
+                <div class="card-header">
+                    <h3>آخر النشاطات</h3>
+                    <button class="btn-view-all">عرض الكل</button>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon gift">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="activity-details">
+                            <p><strong>أحمد محمد</strong> أرسل هدية Diamond Fountain</p>
+                            <span class="time">منذ دقيقتين</span>
+                        </div>
+                        <div class="activity-value">100,000 عملة</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon user">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="activity-details">
+                            <p>تسجيل مستخدم جديد: <strong>سارة علي</strong></p>
+                            <span class="time">منذ 5 دقائق</span>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon stream">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="activity-details">
+                            <p><strong>محمد أحمد</strong> بدأ بث مباشر جديد</p>
+                            <span class="time">منذ 10 دقائق</span>
+                        </div>
+                        <div class="activity-value">2.5K مشاهد</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="activity-details">
+                            <p>تم الإبلاغ عن بث مخالف من <strong>مستخدم مجهول</strong></p>
+                            <span class="time">منذ 15 دقيقة</span>
+                        </div>
+                        <button class="btn-review">مراجعة</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم إدارة المستخدمين -->
+        <section id="users" class="content-section">
+            <div class="section-header">
+                <h2>إدارة المستخدمين</h2>
+                <div class="section-actions">
+                    <button class="btn-export">
+                        <i class="fas fa-download"></i>
+                        تصدير البيانات
+                    </button>
+                    <button class="btn-add">
+                        <i class="fas fa-plus"></i>
+                        إضافة مستخدم
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filters-bar">
+                <input type="text" placeholder="بحث عن مستخدم..." class="search-input">
+                <select class="filter-select">
+                    <option>جميع الحالات</option>
+                    <option>نشط</option>
+                    <option>محظور</option>
+                    <option>غير نشط</option>
+                </select>
+                <select class="filter-select">
+                    <option>الكل حسب المستوى</option>
+                    <option>مستوى 1-10</option>
+                    <option>مستوى 11-50</option>
+                    <option>مستوى 50+</option>
+                </select>
+            </div>
+            
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>المستخدم</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>المستوى</th>
+                            <th>الرصيد</th>
+                            <th>المتابعين</th>
+                            <th>الحالة</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="../assets/images/user1.jpg" alt="User">
+                                    <span>أحمد محمد</span>
+                                </div>
+                            </td>
+                            <td>ahmed@example.com</td>
+                            <td><span class="level-badge">25</span></td>
+                            <td>50,000</td>
+                            <td>15.2K</td>
+                            <td><span class="status-badge active">نشط</span></td>
+                            <td>2024-01-15</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action view" title="عرض"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit" title="تعديل"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-action ban" title="حظر"><i class="fas fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="../assets/images/user2.jpg" alt="User">
+                                    <span>سارة علي</span>
+                                </div>
+                            </td>
+                            <td>sara@example.com</td>
+                            <td><span class="level-badge">18</span></td>
+                            <td>25,000</td>
+                            <td>8.5K</td>
+                            <td><span class="status-badge active">نشط</span></td>
+                            <td>2024-02-20</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-action view"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-action ban"><i class="fas fa-ban"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <button class="btn-page"><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn-page active">1</button>
+                    <button class="btn-page">2</button>
+                    <button class="btn-page">3</button>
+                    <button class="btn-page">...</button>
+                    <button class="btn-page">50</button>
+                    <button class="btn-page"><i class="fas fa-chevron-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم إدارة البثوث -->
+        <section id="streams" class="content-section">
+            <div class="section-header">
+                <h2>إدارة البثوث المباشرة</h2>
+                <div class="section-actions">
+                    <button class="btn-refresh">
+                        <i class="fas fa-sync"></i>
+                        تحديث
+                    </button>
+                </div>
+            </div>
+            
+            <div class="live-streams-grid">
+                <div class="stream-card-admin">
+                    <div class="stream-preview">
+                        <img src="../assets/images/stream1.jpg" alt="Stream">
+                        <div class="live-indicator">مباشر</div>
+                        <div class="stream-stats">
+                            <span><i class="fas fa-eye"></i> 2.5K</span>
+                            <span><i class="fas fa-heart"></i> 15K</span>
+                        </div>
+                    </div>
+                    <div class="stream-info-admin">
+                        <h4>بث كرة القدم المباشر</h4>
+                        <p>أحمد محمد</p>
+                        <div class="stream-meta">
+                            <span><i class="fas fa-clock"></i> منذ ساعة</span>
+                            <span><i class="fas fa-map-marker-alt"></i> مصر</span>
+                        </div>
+                        <div class="stream-actions-admin">
+                            <button class="btn-watch"><i class="fas fa-play"></i> مشاهدة</button>
+                            <button class="btn-stop"><i class="fas fa-stop"></i> إيقاف</button>
+                            <button class="btn-report"><i class="fas fa-flag"></i> إبلاغ</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- المزيد من بطاقات البثوث -->
+            </div>
+        </section>
+
+        <!-- قسم إدارة الهدايا -->
+        <section id="gifts" class="content-section">
+            <div class="section-header">
+                <h2>إدارة الهدايا</h2>
+                <button class="btn-add">
+                    <i class="fas fa-plus"></i>
+                    إضافة هدية جديدة
+                </button>
+            </div>
+            
+            <div class="gifts-grid-admin">
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">🎫</div>
+                    <h4>Pop Pass</h4>
+                    <p class="gift-price">100 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 50,234 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">🍦</div>
+                    <h4>Ice Cream</h4>
+                    <p class="gift-price">500 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 25,123 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">☕</div>
+                    <h4>Coffee</h4>
+                    <p class="gift-price">500 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 30,456 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">🎉</div>
+                    <h4>Cheers</h4>
+                    <p class="gift-price">3,000 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 10,234 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">💕</div>
+                    <h4>Love Doll</h4>
+                    <p class="gift-price">10,000 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 5,678 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                
+                <div class="gift-card-admin">
+                    <div class="gift-icon-large">💎</div>
+                    <h4>Diamond Fountain</h4>
+                    <p class="gift-price">100,000 عملة</p>
+                    <p class="gift-stats">تم إرسالها: 1,234 مرة</p>
+                    <div class="gift-actions">
+                        <button class="btn-action edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأقسام الأخرى ستضاف هنا -->
+        <section id="finance" class="content-section">
+            <h2>النظام المالي</h2>
+            <p>محتوى القسم المالي...</p>
+        </section>
+        
+        <section id="reports" class="content-section">
+            <h2>التقارير والإحصائيات</h2>
+            <p>محتوى قسم التقارير...</p>
+        </section>
+        
+        <section id="moderation" class="content-section">
+            <h2>إشراف المحتوى</h2>
+            <p>محتوى قسم الإشراف...</p>
+        </section>
+        
+        <section id="settings" class="content-section">
+            <h2>إعدادات التطبيق</h2>
+            <p>محتوى قسم الإعدادات...</p>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
